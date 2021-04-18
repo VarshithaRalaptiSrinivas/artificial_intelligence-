@@ -1,0 +1,11 @@
+# Import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+# Instantiate the classifier
+clf = RandomForestClassifier()
+
+# Fit to the training data
+clf.fit(X_train,y_train)
+
+# Compute accuracy
+print(clf.score(X_test,y_test))
