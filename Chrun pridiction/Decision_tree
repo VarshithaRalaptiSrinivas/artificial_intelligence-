@@ -1,0 +1,10 @@
+# Import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
+
+# Instantiate the classifier
+clf= DecisionTreeClassifier()
+
+# Fit the classifier
+clf.fit(telco[features], telco['Churn'])
+# Predict the label of new_customer
+print(clf.predict(new_customer))
