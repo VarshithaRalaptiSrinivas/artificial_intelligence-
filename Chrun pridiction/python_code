@@ -1,1 +1,11 @@
-select * from xyz
+# Import LogisticRegression
+from sklearn.linear_model import LogisticRegression
+
+# Instantiate the classifier
+clf = LogisticRegression()
+
+# Fit the classifier
+clf.fit(telco[features], telco['Churn'])
+
+# Predict the label of new_customer
+print(clf.predict(new_customer))
