@@ -1,3 +1,15 @@
+# Import train_test_split
+from sklearn.model_selection import train_test_split
+
+# Create feature variable
+X = telco.drop('Churn', axis=1)
+
+# Create target variable
+y = telco['Churn']
+
+# Create training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1)
+
 # Import RandomForestClassifier
 from sklearn.ensemble import RandomForestClassifier
 
@@ -5,7 +17,48 @@ from sklearn.ensemble import RandomForestClassifier
 clf = RandomForestClassifier()
 
 # Fit to the training data
-clf.fit(X_train,y_train)
+clf.fit(X_train, y_train)
 
-# Compute accuracy
-print(clf.score(X_test,y_test))
+# Predict the labels of the test set
+y_pred = clf.predict(X_test)
+
+# Import recall_score
+from sklearn.metrics import recall_score
+
+# Print the recall
+print(recall_score(y_test, y_pred))
+
+
+# Generate the probabilities
+y_pred_prob = clf.predict_proba(X_test)[:, 1]
+
+# Import roc_curve
+from sklearn.metrics import roc_curve
+
+# Calculate the roc metrics
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_prob)
+
+# Plot the ROC curve
+plt.plot(fpr,tpr)
+
+# Add labels and diagonal line
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.plot([0, 1], [0, 1], "k--")
+plt.show()
+
+
+# Import GridSearchCV
+from sklearn.model_selection import GridSearchCV
+
+# Create the hyperparameter grid
+param_grid = {'max_features': ['auto', 'sqrt', 'log2']}
+
+# Call GridSearchCV
+grid_search = GridSearchCV(clf, param_grid)
+
+# Fit the model
+grid_search.fit(X, y)
+
+# Print the optimal parameters
+print(grid_search.best_params_)
